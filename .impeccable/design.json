@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-27T00:15:00Z",
+  "title": "Design System: Swaroop Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Electric Cobalt", "canonical": "#3B82F6", "tonalRamp": ["#1E3A8A", "#2563EB", "#3B82F6", "#60A5FA", "#93C5FD", "#BFDBFE", "#DBEAFE", "#EFF6FF"] },
+      "accent-teal": { "role": "secondary", "displayName": "Neon Cyan", "canonical": "#22D3EE", "tonalRamp": ["#083344", "#0891B2", "#22D3EE", "#67E8F9", "#A5F3FC", "#CFFAFE", "#ECFEFF", "#F6FEFF"] },
+      "accent-violet": { "role": "secondary", "displayName": "Soft Violet", "canonical": "#A78BFA", "tonalRamp": ["#4C1D95", "#7C3AED", "#A78BFA", "#C4B5FD", "#DDD6FE", "#EDE9FE", "#F5F3FF", "#FAF5FF"] },
+      "neutral-bg": { "role": "neutral", "displayName": "Stealth Navy", "canonical": "#080c18", "tonalRamp": ["#02040a", "#050810", "#080c18", "#121a30", "#1d294d", "#2e3f70", "#455994", "#657bb8"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Sans", "purpose": "Hero headers and section titles." },
+      "body": { "displayName": "Inter Body", "purpose": "Paragraphs and descriptive copy." },
+      "label": { "displayName": "JetBrains Mono Label", "purpose": "Tags, categories, and technical parameters." }
+    },
+    "shadows": [
+      { "name": "ambient-glow", "value": "0 4px 16px rgba(0,0,0,0.2)", "purpose": "Provides soft isolation without harsh dark drop-shadow edges." }
+    ],
+    "motion": [
+      { "name": "spring-decelerate", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "GSAP deceleration curve for interactive scrolling." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Standard call-to-action button used in the contact section and navigation.",
+      "html": "<button class=\"ds-btn-primary\">GET IN TOUCH</button>",
+      "css": ".ds-btn-primary { background: #3B82F6; color: #F1F5F9; padding: 14px 28px; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 14px; border: none; cursor: pointer; transition: transform 0.2s; } .ds-btn-primary:hover { transform: translateY(-2px); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary button for links that should not compete with the primary button.",
+      "html": "<button class=\"ds-btn-ghost\">VIEW CODE ↗</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: #F1F5F9; padding: 14px 28px; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 14px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: background 0.2s; } .ds-btn-ghost:hover { background: rgba(255,255,255,0.05); }"
+    },
+    {
+      "name": "Skill Pill",
+      "kind": "chip",
+      "description": "Pill representing a single skill in the infinite scrolling marquee.",
+      "html": "<div class=\"ds-skill-pill\"><span class=\"ds-pill-icon\">🧠</span><span class=\"ds-pill-title\">OpenAI API</span><span class=\"ds-pill-tag\">PROVIDERS</span></div>",
+      "css": ".ds-skill-pill { display: inline-flex; align-items: center; gap: 12px; padding: 16px 24px; border-radius: 999px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Inter', sans-serif; font-size: 14px; cursor: default; } .ds-pill-icon { font-size: 18px; } .ds-pill-title { color: #F1F5F9; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; } .ds-pill-tag { color: #94A3B8; font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; background: rgba(255, 255, 255, 0.04); padding: 4px 8px; border-radius: 6px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Liquid Glass Prism",
+    "overview": "The Swaroop Portfolio design system adopts a premium, dark-mode, glassmorphism theme that highlights cutting-edge engineering with fluid, organic visual assets. The canvas uses a deeply saturated navy background, layered with thin, highly translucent glass elements. Ambient multi-point light gradients shine through the glass surfaces, creating depth and a 3D refraction effect.",
+    "keyCharacteristics": [
+      "Deep dark navy canvases for high-contrast glass readability.",
+      "Multi-point glowing background orbs that shift independently to create a depth parallax.",
+      "Smooth transitions and physical easing properties (such as custom spring deceleration on interactive marquee scrolls).",
+      "Crisp specular white border highlights simulating glass refraction."
+    ],
+    "rules": [
+      { "name": "The Rarity Rule", "body": "Glowing neon accents and highlight borders must occupy less than 15% of any screen surface area. Use them strictly to draw attention to interactive elements and tool classifications.", "section": "colors" },
+      { "name": "The Glass Blur Rule", "body": "Every elevated card or overlay panel must apply at least backdrop-filter: blur(24px) to guarantee readability of light text over complex background gradient blobs.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do align the horizontal margins of the Skills marquee card and Projects card container (use max-width: 1120px; margin: 80px auto; for block components).",
+      "Do use GSAP timeScale properties to decelerate animations smoothly on user interaction, rather than pausing abruptly.",
+      "Do use CSS masks to fade out scrolling tracks towards the edges of the parent container."
+    ],
+    "donts": [
+      "Don't use solid or dark black borders on glass cards.",
+      "Don't stack multiple glass panels on top of each other without increasing the background blur factor (backdrop-filter).",
+      "Don't introduce generic, un-curated colors (like standard bright red or green) for alerts or indicators."
+    ]
+  }
+}
