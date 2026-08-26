@@ -53,6 +53,14 @@ components:
 
 # Design System: Swaroop Portfolio
 
+> [!NOTE]
+> **Design Read**: Solo developer portfolio for technical recruiters and collaborators, with a Liquid Glass dark-tech vibe, leaning toward vanilla CSS/JS + custom GSAP scroll physics + modern sans display typography.
+>
+> **Design Dials**:
+> - **`DESIGN_VARIANCE: 6`** (Offset layout balancing clean grid spacing with fluid asymmetry)
+> - **`MOTION_INTENSITY: 6`** (Fluid GSAP scroll marquee & spring physics, but no chaotic page hijacks)
+> - **`VISUAL_DENSITY: 4`** (Airy, focused card paddings allowing components to breathe)
+
 ## Overview
 
 **Creative North Star: "The Liquid Glass Prism"**
