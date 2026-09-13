@@ -1,0 +1,27 @@
+# Environment variables & secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.crt
+
+# Node modules & lock files / temp directories
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.impeccable/
+.codex/
+~/
+
+# Scratch / build files
+scratch/
+temp/
