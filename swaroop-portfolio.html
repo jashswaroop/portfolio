@@ -444,8 +444,6 @@
     position: relative;
     border-radius: 8px;
     box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-    /* mask the skill chart so it slides up cleanly from the bottom edge */
-    overflow: hidden;
     opacity: 0;
     animation: premiumFadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   }
@@ -467,78 +465,6 @@
   @keyframes imageScaleDown {
     0% { transform: scale(1.05); }
     100% { transform: scale(1); }
-  }
-
-  /* ===== Hero Skill Chart Overlay ===== */
-  .skill-chart-anchor {
-    position: absolute;
-    /* FINAL POSITION SOURCE OF TRUTH */
-    /* ~16% provides an 8-10% breathing gap above the ~7% internal gold border */
-    bottom: 16%;
-    /* Shift left to create clear breathing room before the character */
-    left: 12%;
-    width: 18%;
-    /* Keep aspect ratio square for the circular chart backing */
-    aspect-ratio: 1 / 1;
-    z-index: 2;
-    pointer-events: none;
-    will-change: transform, opacity;
-  }
-
-  .hero-skill-chart-backing {
-    position: absolute;
-    inset: -3%; /* Extend slightly beyond the image for the halo */
-    border-radius: 50%;
-    /* Deep charcoal translucent center, fading to transparent at edge */
-    background: radial-gradient(circle at center, rgba(8, 7, 5, 0.65) 0%, rgba(8, 7, 5, 0.4) 65%, transparent 100%);
-    /* Soft dark shadow (for light areas) + subtle champagne glow/line (for dark areas) */
-    box-shadow: 
-      0 12px 30px rgba(0, 0, 0, 0.4), 
-      0 0 12px rgba(230, 215, 180, 0.06),
-      inset 0 0 0 1px rgba(230, 215, 180, 0.05);
-    z-index: 0;
-  }
-
-  .hero-skill-chart-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    /* Blend black background with the dark backing and hero's background */
-    mix-blend-mode: lighten;
-    z-index: 1;
-  }
-
-  /* Reduced motion: place chart in final position instantly */
-  @media (prefers-reduced-motion: reduce) {
-    .skill-chart-anchor {
-      transform: translateY(0%) translateX(0%) !important;
-      opacity: 1 !important;
-    }
-  }
-
-  /* Responsive breakpoints */
-  @media (max-width: 1024px) {
-    .hero-banner-wrapper { border-radius: 6px; }
-    .skill-chart-anchor {
-      width: 22%;
-      left: 8%;
-    }
-  }
-  @media (max-width: 768px) {
-    .hero-banner-wrapper { border-radius: 4px; }
-    .skill-chart-anchor {
-      width: 26%;
-      left: 6%;
-    }
-  }
-  @media (max-width: 480px) {
-    .skill-chart-anchor {
-      width: 30%;
-      left: 4%;
-    }
   }
 
   /* ===== Buttons ===== */
@@ -2643,10 +2569,6 @@
 <section class="hero-banner-section" id="top">
   <div class="hero-banner-wrapper">
     <img src="assets/hero-banner-final.png" alt="Jaswanth Swaroop Kandregula - AI Engineer" class="hero-banner-image">
-    <div class="skill-chart-anchor" id="skillChartAnchor">
-      <div class="hero-skill-chart-backing"></div>
-      <img src="assets/hero-skill-chart.jpg" alt="Skill Chart — AI: A, Learning Speed: S, Cloud: A, Potential: A+, Experience: B, Creativity: A" class="hero-skill-chart-img">
-    </div>
   </div>
 </section>
 
@@ -3239,66 +3161,6 @@
       el.style.transform = 'none';
     });
   }
-
-  // ========== Hero Skill Chart — Scroll-Scrubbed Entrance ==========
-  (function() {
-    var anchor = document.getElementById('skillChartAnchor');
-    var heroSection = document.querySelector('.hero-banner-section');
-    var heroWrapper = document.querySelector('.hero-banner-wrapper');
-    if (!anchor || !heroSection || !heroWrapper) return;
-
-    // Reduced motion: anchor is already at its final layout position, just ensure opacity
-    if (prefersReducedMotion) {
-      anchor.style.transform = 'translateY(0%) translateX(0%)';
-      anchor.style.opacity = '1';
-      return;
-    }
-
-    // Pin the entire hero section and scrub the anchor's transform.
-    var chartTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: heroSection,
-        start: 'top top',
-        end: function() { return '+=' + (window.innerHeight * 2); },
-        pin: true,
-        scrub: 1.2,
-        pinSpacing: true,
-        invalidateOnRefresh: true,
-        anticipatePin: 1
-      }
-    });
-
-    // Animate the anchor FROM its initial off-screen state TO its final CSS layout state (0,0)
-    chartTl.fromTo(anchor,
-      {
-        y: '160%', // Pushed far enough down so its top edge is completely masked by overflow: hidden
-        x: '10%',
-        opacity: 0,
-        scale: 0.96
-      },
-      {
-        y: '0%', // The anchor's CSS bottom: 16% provides the final positional truth
-        x: '0%',
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        ease: 'none'
-      }
-    );
-
-    // Recalculate on resize/orientation change
-    var resizeTimer;
-    function onResize() {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function() {
-        ScrollTrigger.refresh();
-      }, 250);
-    }
-    window.addEventListener('resize', onResize, { passive: true });
-    window.addEventListener('orientationchange', function() {
-      setTimeout(function() { ScrollTrigger.refresh(); }, 500);
-    });
-  })();
 
 // ========== Scroll-Triggered Section Reveals ==========
   if(!prefersReducedMotion){
