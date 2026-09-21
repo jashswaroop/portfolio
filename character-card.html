@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Character Card</title>
+  <style>
+    /* Premium Dark Mode & Apple Music Coral Theme Variables */
+    :root {
+      --bg-base: #050507;
+      --card-bg: rgba(25, 25, 30, 0.6);
+      --card-border: rgba(255, 255, 255, 0.06);
+      --coral-primary: #FA2D48;
+      --coral-dim: rgba(250, 45, 72, 0.15);
+      --text-1: #ffffff;
+      --text-2: rgba(255, 255, 255, 0.65);
+      --text-3: rgba(255, 255, 255, 0.4);
+      --gold: #F5D76E;
+      
+      --font-display: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-1);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+      /* Subtle ambient radial glow */
+      background-image: radial-gradient(circle at 50% 0%, rgba(250, 45, 72, 0.08) 0%, transparent 60%);
+    }
+
+    /* --- The Card Container --- */
+    .char-card {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      box-shadow: 
+        0 24px 80px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 340px; /* Split layout: Left stats, Right portrait */
+      gap: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .char-card:hover {
+      transform: translateY(-4px) scale(1.005);
+      box-shadow: 
+        0 32px 90px rgba(0, 0, 0, 0.5),
+        0 0 40px var(--coral-dim),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* --- Left Column: Stats & Info --- */
+    .card-left {
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      border-right: 1px solid var(--card-border);
+    }
+
+    /* Header Section */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .header-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .subtitle {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--coral-primary);
+      text-shadow: 0 0 12px var(--coral-dim);
+    }
+
+    .main-name {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text-1);
+    }
+
+    .header-meta {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    .rarity-badge {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      background: rgba(245, 215, 110, 0.1);
+      color: var(--gold);
+      border: 1px solid rgba(245, 215, 110, 0.2);
+      box-shadow: 0 0 12px rgba(245, 215, 110, 0.1);
+    }
+
+    .meta-tags {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Empty Containers (Skills & Powers) */
+    .data-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-1);
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--card-border), transparent);
+    }
+
+    .empty-container {
+      width: 100%;
+      height: 160px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    .empty-container:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .empty-text {
+      font-size: 0.85rem;
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    /* --- Right Column: Portrait --- */
+    .card-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 2rem;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 100%);
+    }
+
+    /* Portrait Image Placeholder */
+    .portrait-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      /* Placeholder background */
+      background: radial-gradient(circle at center, rgba(250, 45, 72, 0.05) 0%, transparent 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .portrait-placeholder-icon {
+      width: 64px;
+      height: 64px;
+      opacity: 0.1;
+      filter: drop-shadow(0 0 20px var(--coral-primary));
+    }
+
+    /* Level Badge */
+    .level-badge-container {
+      position: relative;
+      z-index: 2;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .level-badge {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0.5rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle level badge shine effect */
+    .level-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: skewX(-20deg);
+      transition: left 0.7s ease;
+    }
+
+    .char-card:hover .level-badge::before {
+      left: 200%;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .char-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 300px;
+      }
+      
+      .card-left {
+        border-right: none;
+        border-bottom: 1px solid var(--card-border);
+        padding: 2rem;
+      }
+
+      .main-name {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card-header {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .header-meta {
+        align-items: flex-start;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="char-card">
+    
+    <!-- LEFT COLUMN: STATS -->
+    <div class="card-left">
+      
+      <!-- Header -->
+      <header class="card-header">
+        <div class="header-titles">
+          <span class="subtitle">AI engineer</span>
+          <h1 class="main-name">Jaswanth Swaroop Krishna K.</h1>
+        </div>
+        
+        <div class="header-meta">
+          <div class="rarity-badge">RARITY SSS</div>
+          <div class="meta-tags">
+            <span>Male</span>
+            <span>Human</span>
+            <span>Developer</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Skills Section -->
+      <section class="data-section">
+        <h2 class="section-label">Skills</h2>
+        <div class="empty-container">
+          <span class="empty-text">Awaiting Skill Matrix Data...</span>
+        </div>
+      </section>
+
+      <!-- Powers Section -->
+      <section class="data-section">
+        <h2 class="section-label">Powers & Abilities</h2>
+        <div class="empty-container" style="height: 120px;">
+          <span class="empty-text">Awaiting Abilities Data...</span>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN: PORTRAIT -->
+    <div class="card-right">
+      
+      <!-- Portrait Placeholder -->
+      <div class="portrait-frame">
+        <!-- Minimal user icon placeholder -->
+        <svg class="portrait-placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+
+      <!-- Level Badge -->
+      <div class="level-badge-container">
+        <div class="level-badge">Lvl 19</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,3 +1,7 @@
+---
+import '../styles/global.css';
+import { ResumeMenu } from '../components/gooey-menu';
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2939,7 +2943,7 @@
 <!-- Lenis Smooth Scroll -->
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
 
-<script>
+<script is:inline>
 (function(){
   'use strict';
 
@@ -3833,7 +3837,7 @@
 </dialog>
 
 <!-- ===== Basic Asset Caching Script ===== -->
-<script>
+<script is:inline>
   window.addEventListener('load', () => {
     // Hide the loader
     const loader = document.getElementById('page-loader');
@@ -3860,284 +3864,7 @@
   });
 </script>
 
-<!-- Floating Action Button (Pure HTML/CSS/JS) -->
-<style>
-  /* FAB Base */
-  .fab-container {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    font-family: var(--mono, 'JetBrains Mono', monospace);
-  }
-
-  /* FAB Expanding Menu */
-  .fab-menu {
-    margin-bottom: 1rem;
-    width: 220px;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-    
-    /* Animation states */
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-    filter: blur(10px);
-    pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-origin: bottom right;
-  }
-  
-  .fab-menu.open {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0px);
-    pointer-events: auto;
-  }
-
-  /* FAB Menu Items */
-  .fab-menu-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 8px;
-  }
-
-  .fab-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 12px;
-    background: transparent;
-    border: none;
-    border-radius: 12px;
-    color: #fff;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-family: var(--sans, 'Inter', sans-serif);
-  }
-
-  .fab-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  
-  .fab-item:active {
-    transform: scale(0.96);
-  }
-
-  .fab-item-inner {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .fab-icon-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    transition: background 0.2s ease;
-  }
-
-  .fab-item:hover .fab-icon-box {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  .fab-icon-box svg {
-    width: 16px;
-    height: 16px;
-    color: #cbd5e1;
-    transition: color 0.2s ease;
-  }
-
-  .fab-item:hover .fab-icon-box svg {
-    color: #fff;
-  }
-
-  /* Main Button */
-  .fab-trigger {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    cursor: pointer;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 0 40px rgba(250, 45, 72, 0.2);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    z-index: 10;
-  }
-
-  .fab-trigger:hover {
-    transform: scale(1.05);
-    border-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 60px rgba(250, 45, 72, 0.4);
-  }
-
-  .fab-trigger:active {
-    transform: scale(0.95);
-  }
-
-  .fab-glow {
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: linear-gradient(to top right, rgba(250, 45, 72, 0.2), rgba(255, 59, 92, 0.2));
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-  }
-
-  .fab-trigger:hover .fab-glow {
-    opacity: 1;
-  }
-
-  .fab-icon-container {
-    position: relative;
-    z-index: 11;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-  }
-
-  .fab-icon {
-    position: absolute;
-    transition: all 0.3s ease;
-  }
-
-  .fab-icon-doc {
-    opacity: 1;
-    transform: rotate(0deg);
-  }
-
-  .fab-icon-close {
-    opacity: 0;
-    transform: rotate(-90deg);
-  }
-
-  .fab-trigger.open .fab-icon-doc {
-    opacity: 0;
-    transform: rotate(90deg);
-  }
-
-  .fab-trigger.open .fab-icon-close {
-    opacity: 1;
-    transform: rotate(0deg);
-  }
-</style>
-
-<div class="fab-container">
-  <!-- Menu -->
-  <div class="fab-menu" id="fabMenu">
-    <div class="fab-menu-list">
-      
-      <!-- Download PDF -->
-      <a href="resume/jaswanth-swaroop-krishna-kandregula%20(2).pdf" download="Jaswanth_Swaroop_Resume.pdf" class="fab-item">
-        <span class="fab-item-inner">
-          <div class="fab-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          </div>
-          Download PDF
-        </span>
-      </a>
-
-      <!-- Copy Email -->
-      <button class="fab-item" id="fabCopyBtn">
-        <span class="fab-item-inner">
-          <div class="fab-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          </div>
-          <span id="fabCopyText">Copy Email</span>
-        </span>
-      </button>
-
-      <!-- LinkedIn -->
-      <a href="https://linkedin.com/in/jaswanthswaroop" target="_blank" rel="noopener noreferrer" class="fab-item">
-        <span class="fab-item-inner">
-          <div class="fab-icon-box">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </div>
-          LinkedIn
-        </span>
-      </a>
-      
-    </div>
-  </div>
-
-  <!-- Trigger Button -->
-  <button class="fab-trigger" id="fabTrigger" aria-label="Toggle Resume Menu">
-    <div class="fab-glow"></div>
-    <div class="fab-icon-container">
-      <!-- FileText Icon -->
-      <svg class="fab-icon fab-icon-doc" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-      <!-- X Icon -->
-      <svg class="fab-icon fab-icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </div>
-  </button>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const fabTrigger = document.getElementById('fabTrigger');
-    const fabMenu = document.getElementById('fabMenu');
-    const fabCopyBtn = document.getElementById('fabCopyBtn');
-    const fabCopyText = document.getElementById('fabCopyText');
-
-    let isFabOpen = false;
-
-    fabTrigger.addEventListener('click', () => {
-      isFabOpen = !isFabOpen;
-      if (isFabOpen) {
-        fabMenu.classList.add('open');
-        fabTrigger.classList.add('open');
-      } else {
-        fabMenu.classList.remove('open');
-        fabTrigger.classList.remove('open');
-      }
-    });
-
-    // Close when clicking outside
-    document.addEventListener('click', (e) => {
-      if (isFabOpen && !e.target.closest('.fab-container')) {
-        isFabOpen = false;
-        fabMenu.classList.remove('open');
-        fabTrigger.classList.remove('open');
-      }
-    });
-
-    // Handle Copy
-    fabCopyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText('jaswanth.kandregula@gmail.com').then(() => {
-        fabCopyText.textContent = 'Copied!';
-        setTimeout(() => {
-          fabCopyText.textContent = 'Copy Email';
-        }, 2000);
-      });
-    });
-  });
-</script>
+  <ResumeMenu client:load />
 </body>
 
 </html>
