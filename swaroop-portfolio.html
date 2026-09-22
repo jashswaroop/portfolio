@@ -4133,6 +4133,216 @@
     });
   });
 </script>
+<!-- ===== Custom Straw Hat Cursor ===== -->
+<div id="custom-cursor" aria-hidden="true">
+  <img src="assets/straw-hat-cursor.png" alt="" />
+</div>
+
+<style>
+  /* ===== Global Cursor Hiding ===== */
+  @media (hover: hover) and (pointer: fine) {
+    html, body, a, button, [role="button"], input, textarea, select, summary, label, [tabindex], [data-cursor] {
+      cursor: none !important;
+    }
+    
+    /* Text inputs retain text cursor */
+    input[type="text"], input[type="email"], input[type="password"], input[type="search"], input[type="number"], input[type="tel"], input[type="url"], textarea, [contenteditable="true"] {
+      cursor: text !important;
+    }
+  }
+
+  /* ===== Custom Cursor Base Styles ===== */
+  :root {
+    --cursor-size: 52px;
+  }
+
+  #custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--cursor-size);
+    height: var(--cursor-size);
+    pointer-events: none;
+    z-index: 99999; /* Stay above everything including nav and modals */
+    display: none; /* Hidden by default for touch */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    will-change: transform;
+    /* Center the hotspot (offset by half size) */
+    margin-top: calc(var(--cursor-size) / -2);
+    margin-left: calc(var(--cursor-size) / -2);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    #custom-cursor {
+      display: block;
+    }
+  }
+
+  #custom-cursor img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+    transform-origin: center center;
+    will-change: transform;
+    transform: scale(1);
+  }
+
+  /* Interactive hover state */
+  #custom-cursor.is-interactive img {
+    transform: scale(1.15);
+  }
+
+  /* Large state */
+  #custom-cursor.is-large img {
+    transform: scale(1.3);
+  }
+
+  /* Click state - takes priority */
+  #custom-cursor.is-clicking img {
+    transform: scale(0.9) !important;
+  }
+
+  /* Hidden state */
+  #custom-cursor.is-hidden {
+    opacity: 0 !important;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    #custom-cursor {
+      transition: opacity 0.1s ease;
+    }
+    #custom-cursor img {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    // Only initialize if hover is supported
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const cursor = document.getElementById('custom-cursor');
+    if (!cursor) return;
+
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let isVisible = false;
+    let isInitialized = false;
+    
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lerpAmt = prefersReducedMotion ? 1 : 0.15;
+    
+    const interactiveSelectors = 'a, button, [role="button"], input, textarea, select, [tabindex]:not([tabindex="-1"]), [data-cursor="interactive"], summary, label';
+
+    function render() {
+      if (!isInitialized) {
+        requestAnimationFrame(render);
+        return;
+      }
+      
+      const dx = targetX - currentX;
+      const dy = targetY - currentY;
+      
+      currentX += dx * lerpAmt;
+      currentY += dy * lerpAmt;
+      
+      let rotation = 0;
+      if (!prefersReducedMotion) {
+        // Cap rotation between -8 and 8 degrees based on horizontal velocity
+        rotation = Math.min(Math.max(dx * 0.4, -8), 8);
+      }
+      
+      cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${rotation}deg)`;
+      
+      requestAnimationFrame(render);
+    }
+    
+    requestAnimationFrame(render);
+
+    window.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      
+      if (!isInitialized) {
+        currentX = targetX;
+        currentY = targetY;
+        isInitialized = true;
+      }
+      
+      if (!isVisible) {
+        cursor.style.opacity = '1';
+        isVisible = true;
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursor.style.opacity = '0';
+      isVisible = false;
+    });
+    
+    document.addEventListener('mouseenter', () => {
+      if (isInitialized) {
+        cursor.style.opacity = '1';
+        isVisible = true;
+      }
+    });
+
+    window.addEventListener('blur', () => {
+      cursor.style.opacity = '0';
+      isVisible = false;
+    });
+    
+    window.addEventListener('focus', () => {
+      if (isInitialized) {
+        cursor.style.opacity = '1';
+        isVisible = true;
+      }
+    });
+
+    // Event delegation for hover states
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest) {
+        const specificStateEl = e.target.closest('[data-cursor]');
+        const interactiveEl = e.target.closest(interactiveSelectors);
+        
+        if (specificStateEl) {
+          const state = specificStateEl.getAttribute('data-cursor');
+          if (state === 'hidden' || state === 'none') {
+            cursor.classList.add('is-hidden');
+          } else if (state === 'large') {
+            cursor.classList.add('is-large');
+          } else {
+            cursor.classList.add('is-interactive');
+          }
+        } else if (interactiveEl) {
+          cursor.classList.add('is-interactive');
+        }
+      }
+    });
+
+    document.addEventListener('mouseout', () => {
+      cursor.classList.remove('is-interactive', 'is-large', 'is-hidden');
+    });
+
+    document.addEventListener('mousedown', () => {
+      cursor.classList.add('is-clicking');
+    });
+    
+    document.addEventListener('mouseup', () => {
+      cursor.classList.remove('is-clicking');
+    });
+  })();
+</script>
 </body>
 
 </html>
