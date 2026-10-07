@@ -1339,7 +1339,7 @@ import { CustomCursor } from '../components/custom-cursor';
     font-weight: 700;
     line-height: 0.85;
     letter-spacing: -0.04em;
-    background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -2791,7 +2791,7 @@ import { CustomCursor } from '../components/custom-cursor';
             <button class="player-btn" aria-label="Next">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
             </button>
-            <a href="/portfolio/resume/jaswanth-swaroop-krishna-kandregula%20(2).pdf" download="Jaswanth_Swaroop_Resume.pdf" class="player-btn download-btn" title="Download Resume" aria-label="Download Resume">
+            <a href="/portfolio/resume.pdf" download="Jaswanth_Swaroop_Resume.pdf" class="player-btn download-btn" title="Download Resume" aria-label="Download Resume">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             </a>
           </div>
@@ -3668,10 +3668,13 @@ import { CustomCursor } from '../components/custom-cursor';
   // Toggle handler
   var themeToggle = document.querySelector('.theme-toggle');
   if(themeToggle) {
-    themeToggle.addEventListener('click', function() {
+    function toggleThemeHandler(e) {
+      e.preventDefault();
       var isCurrentlyLight = document.documentElement.getAttribute('data-theme') === 'light';
       setTheme(isCurrentlyLight ? 'dark' : 'light');
-    });
+    }
+    themeToggle.addEventListener('click', toggleThemeHandler);
+    themeToggle.addEventListener('touchstart', toggleThemeHandler, {passive: false});
   }
 
   // ========== Nav Scroll Spy ==========
@@ -3704,14 +3707,15 @@ import { CustomCursor } from '../components/custom-cursor';
   window.addEventListener('scroll', updateActiveNav, { passive: true });
   updateActiveNav();
 
-  // ========== Smooth scroll for nav links ==========
-  navLinks.forEach(function(link){
+  // ========== Smooth scroll for all anchor links ==========
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
     link.addEventListener('click', function(e){
-      e.preventDefault();
       var targetId = this.getAttribute('href');
       if (!targetId || targetId === '#') return;
       var target = document.querySelector(targetId);
       if(!target) return;
+
+      e.preventDefault();
 
       var targetPos = target.offsetTop - 80;
       
@@ -3728,6 +3732,9 @@ import { CustomCursor } from '../components/custom-cursor';
           window.scrollTo(0, targetPos);
         }
       }
+      
+      // Update URL without jumping
+      history.pushState(null, '', targetId);
     });
   });
 
