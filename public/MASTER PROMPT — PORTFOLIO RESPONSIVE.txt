@@ -1,0 +1,918 @@
+MASTER PROMPT — PORTFOLIO RESPONSIVE + CROSS-PLATFORM HARDENING
+
+You are working on my existing portfolio website.
+
+Your task is to make the entire website fully responsive, production-ready, performant, accessible, and reliable across desktop, tablet, mobile, touch devices, different browsers, different viewport sizes, high-DPI displays, and different operating systems.
+
+THIS IS AN EXISTING DESIGNED WEBSITE.
+
+Do NOT redesign it.
+Do NOT change its visual identity.
+Do NOT replace working components unnecessarily.
+Do NOT simplify the design just to make responsiveness easier.
+Do NOT remove existing animations or interactions unless they are technically broken or fundamentally incompatible with a specific device.
+Do NOT arbitrarily change typography, spacing, colors, artwork, layouts, or branding.
+
+The goal is:
+
+DESKTOP DESIGN + MOBILE RESPONSIVENESS + TABLET RESPONSIVENESS + CROSS-BROWSER STABILITY + PERFORMANCE + ACCESSIBILITY
+
+while preserving the intended design exactly as closely as technically possible.
+
+============================================================
+PHASE 1 — FULL PROJECT AUDIT BEFORE MODIFYING CODE
+============================================================
+
+Before changing anything, inspect the entire project.
+
+Determine:
+
+1. Framework
+2. Build system
+3. Package manager
+4. Routing system
+5. Component architecture
+6. Global CSS / styling architecture
+7. Responsive system currently being used
+8. Animation libraries
+9. Image handling
+10. Font loading
+11. Existing custom cursor implementation
+12. Any third-party components
+13. Any absolute/fixed positioning
+14. Any viewport-dependent calculations
+15. Any hardcoded widths/heights
+16. Any overflow-hidden containers
+17. Any horizontal scrolling containers
+18. Any components that behave differently based on viewport width
+19. Any desktop-only assumptions
+20. Any mobile-only assumptions
+
+Inspect all major pages/components before beginning implementation.
+
+Create an internal checklist of every section that requires responsive attention.
+
+DO NOT start by blindly adding media queries.
+
+Find the actual causes of responsiveness problems first.
+
+============================================================
+PHASE 2 — PRESERVE THE EXISTING DESIGN
+============================================================
+
+The existing desktop appearance is the design reference.
+
+Treat the current desktop version as the visual source of truth.
+
+Desktop must continue looking essentially identical after the responsive work.
+
+Do NOT:
+
+- redesign the hero
+- replace imagery
+- remove decorative elements
+- simplify the character artwork
+- remove the skill chart
+- remove glassmorphism effects
+- remove animations
+- change the portfolio aesthetic
+- replace fonts without a technical reason
+- change the existing visual hierarchy
+- change the current cursor concept
+
+Only change what is necessary to make the system robust across viewport sizes.
+
+When responsive adaptations are necessary, prefer proportional scaling, fluid layout, wrapping, repositioning, and controlled breakpoint changes rather than completely replacing the design.
+
+============================================================
+PHASE 3 — RESPONSIVE STRATEGY
+============================================================
+
+Do NOT treat mobile as a scaled-down desktop.
+
+Create a deliberate responsive layout.
+
+The site must support at minimum:
+
+320px
+360px
+375px
+390px
+414px
+430px
+480px
+540px
+600px
+768px
+820px
+912px
+1024px
+1280px
+1440px
+1600px
+1920px
+2560px+
+
+Also account for unusual browser viewport sizes.
+
+Do not depend on one breakpoint.
+
+Use fluid CSS where appropriate:
+
+clamp()
+min()
+max()
+minmax()
+%
+vw
+vh
+dvh
+svh
+lvh
+flex
+grid
+aspect-ratio
+container queries where genuinely useful
+
+Avoid excessive breakpoint-specific overrides.
+
+Prefer a small number of meaningful layout breakpoints.
+
+============================================================
+PHASE 4 — MOBILE-FIRST RESPONSIVE BEHAVIOR
+============================================================
+
+Every major section must be reviewed independently.
+
+For each section verify:
+
+- content remains visible
+- text does not overflow
+- buttons remain accessible
+- images remain proportional
+- cards do not become clipped
+- decorative elements do not overlap essential content
+- sections maintain intentional spacing
+- animations do not push content outside the viewport
+- absolute-positioned elements remain correctly anchored
+- no horizontal page scrolling occurs
+- no unexpected vertical gaps appear
+- no content disappears accidentally
+- no interactive element becomes too small to use
+
+Do not simply reduce everything.
+
+Some desktop compositions may need:
+
+- repositioning
+- stacking
+- wrapping
+- controlled scaling
+- different alignment
+- different image anchoring
+- altered spacing
+- different flex/grid behavior
+
+When the desktop composition cannot logically fit on mobile, adapt the composition while preserving the visual concept.
+
+============================================================
+PHASE 5 — HERO SECTION
+============================================================
+
+The hero section requires special attention.
+
+Maintain the visual identity and composition.
+
+Verify:
+
+- hero image scaling
+- character positioning
+- skill chart positioning
+- text positioning
+- buttons
+- decorative elements
+- background artwork
+- overlays
+- viewport height behavior
+- aspect ratio
+- overflow behavior
+
+The hero must work correctly on:
+
+- small phones
+- large phones
+- tablets
+- laptops
+- large monitors
+- ultrawide displays
+
+Never allow the character or important visual elements to become unintentionally cropped.
+
+Never allow the skill chart to overlap important text.
+
+Never allow buttons to disappear below the viewport unexpectedly.
+
+Use responsive positioning rather than hardcoded pixel coordinates wherever possible.
+
+============================================================
+PHASE 6 — CUSTOM CURSOR
+============================================================
+
+The existing custom cursor is an important part of the portfolio.
+
+PRESERVE ITS CURRENT DESKTOP BEHAVIOR.
+
+Do not break:
+
+- smooth movement
+- cursor interpolation
+- hover enlargement
+- click feedback
+- rotation behavior
+- cursor theme switching
+- straw-hat cursor
+- alternate sketch cursor
+- section-based cursor changes
+
+However:
+
+The custom cursor MUST NOT be used on touch-first devices.
+
+Detect fine-pointer/hover capability rather than assuming screen width alone.
+
+Use behavior equivalent to:
+
+@media (hover: hover) and (pointer: fine)
+
+On touch devices:
+
+- restore the native pointer behavior
+- disable custom cursor rendering
+- disable cursor animation loops
+- disable cursor event listeners if unnecessary
+- do not leave hidden cursor styles that interfere with interaction
+
+Desktop cursor behavior must remain unchanged.
+
+============================================================
+PHASE 7 — TOUCH INTERACTION
+============================================================
+
+All interactions must be usable with touch.
+
+Audit:
+
+- buttons
+- links
+- navigation
+- cards
+- menus
+- tabs
+- sliders
+- carousels
+- hover-dependent UI
+- project interactions
+- expandable elements
+- image interactions
+
+Do NOT rely exclusively on hover.
+
+Any important information or functionality available through hover on desktop must remain accessible on touch devices.
+
+Do not create accidental tap-through behavior.
+
+Make interactive controls comfortably tappable.
+
+Do not introduce excessive touch delays.
+
+Avoid gesture conflicts with page scrolling.
+
+============================================================
+PHASE 8 — MOBILE NAVIGATION
+============================================================
+
+Audit the navigation specifically.
+
+Ensure:
+
+- navigation fits small screens
+- menu does not overflow
+- menu button is easy to tap
+- opened menus fit within the viewport
+- menu can always be closed
+- body scrolling behaves correctly while menus are open
+- background content cannot accidentally be interacted with
+- keyboard navigation remains functional
+- Escape closes overlays when appropriate
+- focus behavior remains correct
+
+Do not allow a mobile menu to create horizontal overflow.
+
+============================================================
+PHASE 9 — TYPOGRAPHY
+============================================================
+
+Audit every text element.
+
+Check for:
+
+- overflow
+- awkward wrapping
+- clipped text
+- giant headings on mobile
+- tiny body text
+- buttons becoming too wide
+- line-height problems
+- unintended text collision
+
+Use fluid typography where appropriate.
+
+Prefer:
+
+clamp()
+
+instead of large collections of breakpoint-specific font sizes.
+
+Ensure long text remains readable.
+
+Never solve wrapping issues by hiding text.
+
+============================================================
+PHASE 10 — IMAGES AND ARTWORK
+============================================================
+
+Audit every image.
+
+Requirements:
+
+- preserve aspect ratio
+- prevent distortion
+- avoid accidental stretching
+- avoid blurry scaling where possible
+- use appropriate object-fit/object-position
+- prevent image overflow
+- optimize oversized images
+- avoid loading unnecessarily massive assets on mobile
+- maintain visual quality on high-DPI displays
+
+For decorative artwork:
+
+ensure it never causes horizontal page overflow.
+
+For important content images:
+
+ensure they remain visible and correctly framed.
+
+Do not replace artistic assets unless absolutely necessary.
+
+============================================================
+PHASE 11 — VIDEO / CANVAS / WEBGL / HEAVY EFFECTS
+============================================================
+
+If the website contains:
+
+- video
+- canvas
+- WebGL
+- particle systems
+- large animated backgrounds
+- heavy blur
+- complex filters
+
+audit them carefully.
+
+On mobile:
+
+- reduce unnecessary rendering
+- pause off-screen animations
+- lower expensive effects where necessary
+- avoid excessive battery/CPU usage
+- prevent thermal/performance issues
+- keep the visual concept intact
+
+Use IntersectionObserver when appropriate.
+
+Do not continuously animate invisible elements.
+
+============================================================
+PHASE 12 — VIEWPORT HEIGHT PROBLEMS
+============================================================
+
+Do NOT rely blindly on:
+
+100vh
+
+because mobile browsers have dynamic browser UI.
+
+Use modern viewport units where appropriate:
+
+100dvh
+100svh
+100lvh
+
+especially for full-screen hero or navigation components.
+
+Ensure layouts behave correctly when mobile browser address bars expand/collapse.
+
+Test portrait and landscape orientations.
+
+============================================================
+PHASE 13 — SAFE AREAS
+============================================================
+
+Account for modern mobile devices with:
+
+- notches
+- camera cutouts
+- rounded display corners
+- home indicators
+
+Where appropriate use:
+
+env(safe-area-inset-top)
+env(safe-area-inset-bottom)
+env(safe-area-inset-left)
+env(safe-area-inset-right)
+
+Do not add safe-area padding globally unless necessary.
+
+Apply it only to relevant edge-to-edge components.
+
+============================================================
+PHASE 14 — HORIZONTAL OVERFLOW
+============================================================
+
+There must be NO accidental horizontal scrolling.
+
+Inspect the entire page for:
+
+- oversized elements
+- absolute-positioned objects
+- fixed-width containers
+- negative translations
+- transforms
+- images wider than the viewport
+- long text
+- flex children refusing to shrink
+- min-width issues
+- grid overflow
+- animated elements extending beyond boundaries
+
+Do not simply solve every problem with:
+
+overflow-x: hidden;
+
+That can hide real layout bugs.
+
+Find and correct the actual source of overflow first.
+
+Only use overflow clipping intentionally where appropriate.
+
+============================================================
+PHASE 15 — CSS QUALITY
+============================================================
+
+Clean up responsive CSS carefully.
+
+Avoid:
+
+- excessive !important
+- contradictory media queries
+- duplicated styles
+- deeply nested overrides
+- brittle pixel values
+- CSS hacks that solve only one viewport
+- unnecessary JavaScript width checks
+- duplicated responsive logic
+
+Prefer:
+
+- fluid layouts
+- flexbox
+- grid
+- clamp()
+- minmax()
+- logical properties
+- container queries where useful
+- CSS custom properties
+- semantic breakpoints
+
+Keep the implementation maintainable.
+
+============================================================
+PHASE 16 — JAVASCRIPT RESPONSIVENESS
+============================================================
+
+Audit JavaScript for viewport-specific assumptions.
+
+Avoid code such as:
+
+window.innerWidth === 768
+
+or fragile width checks.
+
+If viewport-dependent behavior is required:
+
+- use robust media-query APIs
+- react to resize/orientation changes correctly
+- clean up listeners
+- avoid unnecessary re-renders
+- debounce/throttle expensive operations when appropriate
+
+Prefer CSS for purely visual responsive behavior.
+
+Use JavaScript only when behavior genuinely requires it.
+
+============================================================
+PHASE 17 — ACCESSIBILITY
+============================================================
+
+The responsive implementation must remain accessible.
+
+Verify:
+
+- keyboard navigation
+- visible focus states
+- semantic buttons/links
+- proper headings
+- meaningful image alt text
+- accessible navigation
+- form labels
+- sufficient contrast
+- screen-reader compatibility
+- reduced-motion support
+
+Respect:
+
+prefers-reduced-motion: reduce
+
+When reduced motion is enabled:
+
+- reduce or disable unnecessary animations
+- disable cursor trailing effects
+- minimize large transitions
+- avoid motion that can cause discomfort
+
+Never remove keyboard accessibility just because hover interactions exist.
+
+============================================================
+PHASE 18 — PERFORMANCE
+============================================================
+
+The portfolio must feel fast.
+
+Audit:
+
+- JavaScript bundle size
+- image sizes
+- font loading
+- animation loops
+- scroll listeners
+- resize listeners
+- DOM complexity
+- expensive CSS filters
+- backdrop-filter usage
+- large shadows
+- unnecessary re-renders
+- unused packages
+- duplicate assets
+- network requests
+
+Use:
+
+requestAnimationFrame
+
+for animation loops where appropriate.
+
+Use passive listeners for scrolling/touch events when appropriate.
+
+Use lazy loading for below-the-fold content where appropriate.
+
+Do not lazy-load the primary hero assets if that would create visible loading delays.
+
+Do not sacrifice visual quality unnecessarily.
+
+============================================================
+PHASE 19 — FONT LOADING
+============================================================
+
+Audit font loading.
+
+Ensure:
+
+- text does not remain invisible during loading
+- layout does not shift excessively
+- fonts load efficiently
+- fallbacks are sensible
+- typography remains consistent across browsers
+
+If custom fonts are currently used, preserve them.
+
+Do not replace typography merely to simplify implementation.
+
+============================================================
+PHASE 20 — CROSS-BROWSER COMPATIBILITY
+============================================================
+
+The site must work correctly across current versions of:
+
+Desktop:
+- Google Chrome
+- Microsoft Edge
+- Mozilla Firefox
+- Safari
+
+Mobile:
+- iOS Safari
+- Chrome on Android
+- Samsung Internet where practical
+
+Test browser-specific issues involving:
+
+- viewport units
+- fixed positioning
+- backdrop-filter
+- transforms
+- sticky positioning
+- smooth scrolling
+- font rendering
+- touch behavior
+- overflow
+- pointer detection
+- form controls
+
+Do not use experimental APIs without appropriate fallback.
+
+============================================================
+PHASE 21 — HIGH-DPI / RETINA / LARGE DISPLAYS
+============================================================
+
+Check behavior on:
+
+- Retina displays
+- high-DPI Windows displays
+- 125% scaling
+- 150% scaling
+- 200% scaling
+- ultrawide monitors
+
+Do not assume device pixel ratio = 1.
+
+Ensure images remain sharp without unnecessarily downloading enormous assets.
+
+============================================================
+PHASE 22 — LANDSCAPE MODE
+============================================================
+
+Test mobile landscape mode.
+
+Pay particular attention to:
+
+- hero height
+- navigation
+- buttons
+- images
+- cards
+- overlays
+- full-screen sections
+
+Ensure content remains accessible and does not become vertically trapped.
+
+============================================================
+PHASE 23 — ROUTING AND PAGE TRANSITIONS
+============================================================
+
+If the site uses client-side routing:
+
+test every route at:
+
+- desktop
+- tablet
+- mobile
+
+Verify that:
+
+- cursor state is reset correctly when appropriate
+- scroll position behaves correctly
+- animations do not duplicate
+- event listeners are not duplicated
+- components mount/unmount cleanly
+- responsive state is not stale after navigation
+
+============================================================
+PHASE 24 — RESPONSIVE DESIGN VALIDATION
+============================================================
+
+Do not consider the job complete because the page "looks okay" at one mobile width.
+
+Validate representative viewport categories:
+
+SMALL PHONE
+320×568
+360×800
+
+STANDARD PHONE
+390×844
+393×852
+
+LARGE PHONE
+430×932
+
+TABLET
+768×1024
+820×1180
+1024×1366
+
+LAPTOP
+1280×720
+1366×768
+
+DESKTOP
+1440×900
+1600×900
+1920×1080
+
+LARGE DESKTOP
+2560×1440
+
+ULTRAWIDE
+3440×1440
+
+Also test intermediate widths between these sizes.
+
+============================================================
+PHASE 25 — AUTOMATED VALIDATION
+============================================================
+
+Where the current project supports it, use existing tooling or browser automation to validate:
+
+- layout
+- overflow
+- navigation
+- buttons
+- links
+- viewport changes
+- responsive breakpoints
+- cursor behavior
+- console errors
+- network failures
+
+Do NOT add a large testing framework solely for this task unless the project genuinely needs it.
+
+At minimum check for:
+
+- console errors
+- unhandled promise rejections
+- missing assets
+- broken routes
+- failed network requests
+- hydration errors if applicable
+- React warnings if applicable
+- accessibility issues where tooling supports them
+
+============================================================
+PHASE 26 — VISUAL REGRESSION
+============================================================
+
+Before making changes, understand the current desktop appearance.
+
+After modifications:
+
+compare desktop against the existing design.
+
+The responsive implementation must NOT unintentionally change the established desktop design.
+
+Specifically compare:
+
+- hero
+- typography
+- character placement
+- skill chart
+- cards
+- navigation
+- footer
+- decorative elements
+- animations
+- cursor
+- spacing
+- colors
+
+Any visual difference on desktop must be intentional and justified by the responsive implementation.
+
+============================================================
+PHASE 27 — FAILURE-RESISTANT IMPLEMENTATION
+============================================================
+
+The website must continue functioning if:
+
+- an image loads slowly
+- a non-critical animation fails
+- the custom cursor asset fails
+- a font fails to load
+- the viewport changes during an animation
+- the user rotates the device
+- the browser changes its dynamic toolbar height
+- JavaScript temporarily fails for a non-essential enhancement
+
+Core navigation and content must remain usable.
+
+Progressive enhancement is preferred.
+
+============================================================
+PHASE 28 — DO NOT OVERENGINEER
+============================================================
+
+Do not rebuild the entire website.
+
+Do not create unnecessary abstractions.
+
+Do not introduce dependencies unless there is a genuine requirement.
+
+Do not convert working CSS into a different framework.
+
+Do not replace a working animation library.
+
+Do not create a giant responsive utility system for a single portfolio.
+
+Make the smallest clean architectural changes necessary to make the website robust.
+
+============================================================
+PHASE 29 — FINAL CLEANUP
+============================================================
+
+After implementation:
+
+1. Remove dead responsive CSS.
+2. Remove obsolete viewport hacks.
+3. Remove duplicate event listeners.
+4. Remove unused imports.
+5. Remove temporary debugging code.
+6. Remove console.log statements introduced during implementation.
+7. Check asset paths.
+8. Check all routes.
+9. Check build.
+10. Check production build.
+11. Confirm no console errors.
+12. Confirm no horizontal overflow.
+13. Confirm no broken interactions.
+14. Confirm custom cursor still works correctly on supported desktop devices.
+15. Confirm custom cursor is completely disabled on touch devices.
+
+============================================================
+PHASE 30 — FINAL REPORT
+============================================================
+
+When implementation is complete, do NOT simply say:
+
+"Responsive design completed."
+
+Provide a concise engineering report containing:
+
+A. Files modified
+B. Files created
+C. Major responsive issues discovered
+D. Actual fixes applied
+E. Desktop behavior preserved
+F. Mobile behavior implemented
+G. Tablet behavior implemented
+H. Custom cursor behavior on desktop
+I. Custom cursor behavior on touch devices
+J. Accessibility improvements
+K. Performance improvements
+L. Browser compatibility considerations
+M. Any remaining limitations
+
+Also explicitly state whether:
+
+- production build succeeds
+- there are console errors
+- horizontal overflow exists
+- broken routes exist
+- missing assets exist
+- hydration errors exist
+- responsive layout issues remain
+
+DO NOT CLAIM SOMETHING WAS TESTED IF IT WAS NOT ACTUALLY TESTED.
+
+============================================================
+MOST IMPORTANT RULE
+============================================================
+
+DO NOT MAKE THE WEBSITE "RESPONSIVE" BY RANDOMLY SHRINKING EVERYTHING.
+
+Instead:
+
+INSPECT → IDENTIFY ROOT CAUSE → IMPLEMENT → TEST → VALIDATE → REFINE
+
+The final result should feel like the website was intentionally designed for every screen size from the beginning.
+
+The desktop experience must remain visually faithful to the current design.
+
+The mobile experience must feel intentionally composed rather than like a squeezed desktop layout.
+
+The tablet experience must sit naturally between desktop and mobile.
+
+The website must remain smooth, fast, accessible, and reliable.
+
+Begin by auditing the existing project before modifying any files.
+

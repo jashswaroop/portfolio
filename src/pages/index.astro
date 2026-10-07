@@ -78,6 +78,23 @@ import { CustomCursor } from '../components/custom-cursor';
     background-color: var(--bg-0);
   }
 
+  /* ===== Lenis Essential CSS ===== */
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
+  }
+
   /* ===== Reduced Motion ===== */
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
@@ -98,8 +115,9 @@ import { CustomCursor } from '../components/custom-cursor';
       var(--bg-0);
     color:var(--text-0);
     font-family:var(--body);
-    overflow-x:hidden;
-    min-height:100vh;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: break-word; /* Prevents extremely long URLs/emails from breaking layout */
+    min-height:100dvh;
     position:relative;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
@@ -176,16 +194,18 @@ import { CustomCursor } from '../components/custom-cursor';
     transition:transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
   }
 
-  .glass:hover{
-    transform: translateY(-4px) scale(1.005);
-    border-color: rgba(250,45,72,0.4);
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
-      radial-gradient(ellipse at 30% 20%, rgba(250,45,72,0.1), transparent 60%);
-    box-shadow:
-      0 12px 40px rgba(0,0,0,0.25),
-      0 0 60px rgba(250,45,72,0.15),
-      inset 0 1px 0 rgba(255,255,255,0.1);
+  @media (hover: hover) and (pointer: fine) {
+    .glass:hover{
+      transform: translateY(-4px) scale(1.005);
+      border-color: rgba(250,45,72,0.4);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        radial-gradient(ellipse at 30% 20%, rgba(250,45,72,0.1), transparent 60%);
+      box-shadow:
+        0 12px 40px rgba(0,0,0,0.25),
+        0 0 60px rgba(250,45,72,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+    }
   }
 
   /* ===== Native HTML5 Dialog Modal ===== */
@@ -243,9 +263,10 @@ import { CustomCursor } from '../components/custom-cursor';
 
   /* ===== Navigation ===== */
   nav{
-    position:fixed; top:20px; left:50%; transform:translateX(-50%);
+    position:fixed; top:20px; left:0; right:0; margin:0 auto;
+    transform:translateZ(0); -webkit-transform:translateZ(0);
     z-index:100; display:flex; align-items:center; justify-content:space-between;
-    padding:6px; border-radius:50px;
+    padding:6px; border-radius:50px; overflow:hidden;
     background:rgba(255, 255, 255, 0.03);
     backdrop-filter:blur(35px) saturate(140%);
     -webkit-backdrop-filter:blur(35px) saturate(140%);
@@ -254,7 +275,7 @@ import { CustomCursor } from '../components/custom-cursor';
       inset 0 2px 4px rgba(255, 255, 255, 0.4), 
       inset 0 -2px 4px rgba(0, 0, 0, 0.2), 
       0 10px 30px rgba(0, 0, 0, 0.2);
-    transition:all 0.4s cubic-bezier(0.23,1,0.32,1);
+    transition:transform 0.4s cubic-bezier(0.23,1,0.32,1), opacity 0.4s cubic-bezier(0.23,1,0.32,1);
     width: max-content;
     max-width: 95vw;
     gap: 12px;
@@ -287,7 +308,7 @@ import { CustomCursor } from '../components/custom-cursor';
   .nav-links a {
     color:var(--text-1); text-decoration:none; font-family:var(--body); font-weight:500;
     font-size:14px; padding:10px 18px; border-radius:50px;
-    transition:all 0.35s ease;
+    transition:color 0.35s ease, background 0.35s ease, opacity 0.35s ease;
     border:1px solid transparent;
     position:relative;
   }
@@ -315,7 +336,7 @@ import { CustomCursor } from '../components/custom-cursor';
     border: 1px solid transparent;
     cursor:pointer; outline:none;
     color: var(--text-0);
-    transition:all 0.3s ease;
+    transition:transform 0.3s ease, background 0.3s ease, color 0.3s ease;
   }
   .theme-toggle:hover {
     background:rgba(255, 255, 255, 0.15);
@@ -329,7 +350,7 @@ import { CustomCursor } from '../components/custom-cursor';
     display:flex; align-items:center; justify-content:center;
     width:28px; height:28px; border-radius:50%;
     font-size:14px;
-    transition:all 0.3s ease;
+    transition:background 0.3s ease, transform 0.3s ease;
     opacity: 0.5;
   }
   .theme-toggle span.active {
@@ -347,7 +368,7 @@ import { CustomCursor } from '../components/custom-cursor';
     font-family:var(--body); font-weight:600; font-size:14px;
     padding:10px 22px; border-radius:50px;
     text-decoration:none;
-    transition:all 0.3s ease;
+    transition:transform 0.3s ease, opacity 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
       inset 0 2px 4px rgba(255, 255, 255, 0.5), 
@@ -394,6 +415,10 @@ import { CustomCursor } from '../components/custom-cursor';
     padding:130px 8vw 50px;
     max-width:1200px; margin:0 auto;
   }
+  
+  #experience, #projects, #education, #why-hire-me {
+    overflow: hidden;
+  }
 
   .eyebrow{
     font-family:var(--mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
@@ -430,7 +455,7 @@ import { CustomCursor } from '../components/custom-cursor';
 
     /* ===== Hero Section (Single Composite Banner) ===== */
   .hero-banner-section {
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -482,7 +507,7 @@ import { CustomCursor } from '../components/custom-cursor';
     font-family:var(--body); font-weight:600; font-size:14.5px;
     padding:14px 28px; border-radius:var(--radius-sm);
     text-decoration:none; display:inline-flex; align-items:center; gap:8px;
-    transition:transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+    transition:transform 150ms cubic-bezier(0.23,1,0.32,1), box-shadow 150ms ease, background 150ms ease, border-color 150ms ease;
     border:1px solid transparent; cursor:pointer; position:relative; overflow:hidden;
   }
   .btn:active{ transform:scale(0.97) !important; }
@@ -505,17 +530,19 @@ import { CustomCursor } from '../components/custom-cursor';
     background-size:280% 100%; background-position:200% 0;
     transition:none;
   }
-  .btn-primary:hover{
-    transform:translateY(-3px);
-    background:rgba(255,255,255,0.12);
-    border-color:rgba(250,45,72,0.55);
-    box-shadow:
-      0 10px 32px rgba(0,0,0,0.3),
-      0 0 50px rgba(250,45,72,0.15),
-      inset 0 1px 0 rgba(255,255,255,0.12);
-  }
-  .btn-primary:hover::before{
-    animation:shimmerSweep 0.85s ease forwards;
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover{
+      transform:translateY(-3px);
+      background:rgba(255,255,255,0.12);
+      border-color:rgba(250,45,72,0.55);
+      box-shadow:
+        0 10px 32px rgba(0,0,0,0.3),
+        0 0 50px rgba(250,45,72,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+    .btn-primary:hover::before{
+      animation:shimmerSweep 0.85s ease forwards;
+    }
   }
 
   .btn-ghost{
@@ -534,18 +561,20 @@ import { CustomCursor } from '../components/custom-cursor';
     background-size:280% 100%; background-position:200% 0;
     opacity:0;
   }
-  .btn-ghost:hover{
-    transform:translateY(-3px);
-    background:rgba(255,255,255,0.08);
-    border-color:rgba(250,45,72,0.35);
-    box-shadow:
-      0 8px 24px rgba(0,0,0,0.3),
-      0 0 30px rgba(250,45,72,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.10);
-  }
-  .btn-ghost:hover::before{
-    opacity:1;
-    animation:shimmerSweep 1s ease forwards;
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ghost:hover{
+      transform:translateY(-3px);
+      background:rgba(255,255,255,0.08);
+      border-color:rgba(250,45,72,0.35);
+      box-shadow:
+        0 8px 24px rgba(0,0,0,0.3),
+        0 0 30px rgba(250,45,72,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.10);
+    }
+    .btn-ghost:hover::before{
+      opacity:1;
+      animation:shimmerSweep 1s ease forwards;
+    }
   }
 
   /* Magnetic button ripple on click */
@@ -788,13 +817,15 @@ import { CustomCursor } from '../components/custom-cursor';
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.05);
     transition:border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
   }
-  .job-card:hover .job-period{
-    border-color:rgba(250,45,72,0.30);
-    background:rgba(250,45,72,0.06);
-    box-shadow:
-      0 4px 12px rgba(0,0,0,0.2),
-      inset 0 1px 0 rgba(255,255,255,0.06);
-    transform:translateY(-1px);
+  @media (hover: hover) and (pointer: fine) {
+    .job-card:hover .job-period{
+      border-color:rgba(250,45,72,0.30);
+      background:rgba(250,45,72,0.06);
+      box-shadow:
+        0 4px 12px rgba(0,0,0,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      transform:translateY(-1px);
+    }
   }
   .job-card ul{
     margin-top:20px; padding-left:0; list-style:none;
@@ -809,10 +840,6 @@ import { CustomCursor } from '../components/custom-cursor';
     border-radius:12px;
     transition:background 0.3s ease, padding-left 0.3s ease;
   }
-  .job-card li:hover{
-    background:rgba(250,45,72,0.04);
-    padding-left:32px;
-  }
   .job-card li::before{
     content:''; position:absolute; left:8px; top:12px;
     width:8px; height:8px; border-radius:2px;
@@ -821,9 +848,15 @@ import { CustomCursor } from '../components/custom-cursor';
     transform:rotate(45deg);
     transition:left 0.3s ease, box-shadow 0.3s ease;
   }
-  .job-card li:hover::before{
-    left:12px;
-    box-shadow:0 0 14px rgba(250,45,72,0.5), 0 0 28px rgba(250,45,72,0.25);
+  @media (hover: hover) and (pointer: fine) {
+    .job-card li:hover{
+      background:rgba(250,45,72,0.04);
+      padding-left:32px;
+    }
+    .job-card li:hover::before{
+      left:12px;
+      box-shadow:0 0 14px rgba(250,45,72,0.5), 0 0 28px rgba(250,45,72,0.25);
+    }
   }
 
   /* ===== Projects Section ===== */
@@ -1253,7 +1286,7 @@ import { CustomCursor } from '../components/custom-cursor';
     box-shadow:
       0 4px 12px rgba(0,0,0,0.15),
       inset 0 1px 0 rgba(255,255,255,0.05);
-    transition:all 0.35s cubic-bezier(0.23,1,0.32,1);
+    transition:background 0.35s cubic-bezier(0.23,1,0.32,1), border-color 0.35s cubic-bezier(0.23,1,0.32,1), transform 0.35s cubic-bezier(0.23,1,0.32,1);
     cursor:default; position:relative; overflow:hidden;
   }
   .skill-chips span::before{
@@ -1286,7 +1319,7 @@ import { CustomCursor } from '../components/custom-cursor';
 
   .hire-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 24px;
     margin-top: 48px;
   }
@@ -1403,7 +1436,7 @@ import { CustomCursor } from '../components/custom-cursor';
   }
 
   /* ===== Education & Certifications ===== */
-  .edu-cert-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+  .edu-cert-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:28px; align-items:start; }
   .edu-card{ padding:34px; }
   .edu-card h3{
     font-family:var(--disp); font-size:19px; margin-bottom:8px;
@@ -2515,6 +2548,150 @@ import { CustomCursor } from '../components/custom-cursor';
     opacity: 0;
     visibility: hidden;
   }
+  
+  /* ===== Responsive & Cross-Platform Hardening Overrides ===== */
+  @media (max-width: 768px) {
+    /* Touch Targets */
+    .player-btn, .fab-trigger, .theme-toggle, nav a, .nav-cta {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Layout Wrapping Fixes */
+    .timeline, .about-grid, .about-music-container {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+    
+    /* Fix Nav Overflow and Ensure Safe Area */
+    nav {
+      left: 16px !important;
+      right: 16px !important;
+      margin: 0 !important;
+      width: auto !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      padding: 6px 8px !important;
+      box-sizing: border-box !important;
+    }
+    
+    footer {
+      padding-bottom: calc(env(safe-area-inset-bottom, 24px) + 60px) !important;
+    }
+    
+    /* Hover-Gallery Stacking on Mobile */
+    .hover-gallery {
+      flex-direction: column !important;
+      height: auto !important;
+      gap: 24px !important;
+    }
+    .gallery-item {
+      height: auto !important;
+      min-height: 420px !important;
+      flex: none !important;
+      width: 100% !important;
+      border-radius: 24px !important;
+    }
+    .gallery-item:hover {
+      height: auto !important;
+      transform: scale(1.02);
+    }
+    .gallery-content {
+      position: relative !important;
+      bottom: auto !important;
+      padding: 32px 24px !important;
+      opacity: 1 !important;
+      transform: none !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-end !important;
+    }
+    .project-stack {
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+    .project-stack span {
+      margin-bottom: 8px !important;
+    }
+
+    /* Reduce giant fonts gracefully if not clamped */
+    h1 { font-size: clamp(36px, 8vw, 72px) !important; }
+    h2 { font-size: clamp(28px, 6vw, 48px) !important; }
+    h3 { font-size: clamp(20px, 4vw, 32px) !important; }
+    
+    /* Swipeable Mobile Navigation */
+    .nav-links {
+      flex: 1 1 0px !important;
+      min-width: 0 !important;
+      width: 0 !important;
+      max-width: calc(100% - 160px) !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      /* Hide scrollbar */
+      scrollbar-width: none;
+    }
+    .nav-actions {
+      flex-shrink: 0 !important;
+      gap: 4px !important;
+      margin-left: 4px !important;
+    }
+    .nav-cta {
+      padding: 8px 16px !important;
+      font-size: 13px !important;
+    }
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-links a {
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+
+    /* Freeze heavy background noise on mobile */
+    .grain {
+      animation: none !important;
+      opacity: 0.02 !important;
+    }
+  }
+
+  /* Universal Safe Areas */
+  .hero-banner-section, .fab-container, .player-bar-container {
+    padding-left: max(env(safe-area-inset-left), 2vw);
+    padding-right: max(env(safe-area-inset-right), 2vw);
+  }
+
+  /* Ensure media scales fluidly */
+  img, canvas, video, svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Fallback for hover effects on Touch-only */
+  @media (hover: none) {
+    .job-card .job-period { background: rgba(250,45,72,0.06); border-color: rgba(250,45,72,0.30); }
+    .gallery-item-title, .gallery-item-desc { transform: translateY(0) !important; opacity: 1 !important; }
+  }
+
+  /* Performance: Hardware Acceleration */
+  .hero-banner-image, .fab-icon, .player-progress-fill, .lyrics-line {
+    will-change: transform, opacity;
+  }
+
+  /* Universal Accessibility: Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -2815,7 +2992,7 @@ import { CustomCursor } from '../components/custom-cursor';
       <div class="glass-spotlight" aria-hidden="true"></div>
       <span class="hire-ordinal">01</span>
       <div class="hire-card-content">
-        <h3><span class="hire-icon">🚀</span> I get things done.</h3>
+        <h3>I get things done.</h3>
         <p>No matter how hard a task is — even if I've never touched the tool before — I always deliver. And I deliver it right. Not a half-baked prototype; production-grade, tested, shipped.</p>
       </div>
     </div>
@@ -2827,7 +3004,7 @@ import { CustomCursor } from '../components/custom-cursor';
       <div class="glass-spotlight" aria-hidden="true"></div>
       <span class="hire-ordinal">02</span>
       <div class="hire-card-content">
-        <h3><span class="hire-icon">🔥</span> Unmatched dedication.</h3>
+        <h3>Unmatched dedication.</h3>
         <p>I'm the kind of engineer who stays up debugging until 3 AM because "close enough" isn't in the vocabulary. Every commit should make the product better, not just different.</p>
       </div>
     </div>
@@ -2839,7 +3016,7 @@ import { CustomCursor } from '../components/custom-cursor';
       <div class="glass-spotlight" aria-hidden="true"></div>
       <span class="hire-ordinal">03</span>
       <div class="hire-card-content">
-        <h3><span class="hire-icon">💡</span> Creative problem-solving.</h3>
+        <h3>Creative problem-solving.</h3>
         <p>When the obvious path fails, I don't stall. I rethink the approach, find the side door, and build the bridge that wasn't there before. The best solutions rarely come from the manual.</p>
       </div>
     </div>
@@ -2934,8 +3111,6 @@ import { CustomCursor } from '../components/custom-cursor';
   </div>
 </footer>
 
-<!-- Back to Top -->
-<a href="#top" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 
 <!-- GSAP 3.12.5 + ScrollTrigger + ScrollTo -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -3039,30 +3214,7 @@ import { CustomCursor } from '../components/custom-cursor';
     }
   }, {passive: true});
 
-  // ========== Back to Top Button ==========
-  var backToTop = document.getElementById('backToTop');
-  if(backToTop){
-    window.addEventListener('scroll', function(){
-      if(window.scrollY > 600){
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    }, {passive: true});
 
-    backToTop.addEventListener('click', function(e){
-      e.preventDefault();
-      if(lenis){
-        lenis.scrollTo(0, { duration: 1.2 });
-      } else {
-        gsap.to(window, {
-          scrollTo: {y: 0, autoKill: true},
-          duration: 1.2,
-          ease: 'power3.inOut'
-        });
-      }
-    });
-  }
 
   // ========== Certificate Modal Logic ==========
   var certModal = document.getElementById('certModal');
@@ -3692,7 +3844,7 @@ import { CustomCursor } from '../components/custom-cursor';
   const turb = document.getElementById('liquidTurbulence');
   const disp = document.getElementById('liquidDisplacement');
   
-  if (turb && disp) {
+  if (turb && disp && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let targetScale = 15;
     let currentScale = 15;
     let targetFreq = 0.012;

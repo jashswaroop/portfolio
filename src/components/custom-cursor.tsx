@@ -198,7 +198,7 @@ export function CustomCursor() {
           background: transparent;
           border: none;
           box-shadow: none;
-          transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1);
+          transition: transform 100ms cubic-bezier(0.23, 1, 0.32, 1);
           transform-origin: center center;
           will-change: transform;
           transform: scale(1);

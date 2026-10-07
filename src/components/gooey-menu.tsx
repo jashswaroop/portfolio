@@ -15,7 +15,10 @@ export function ResumeMenu() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[9999] flex flex-col items-end">
+    <div 
+      className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[9999] flex flex-col items-end"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingRight: 'env(safe-area-inset-right)' }}
+    >
       {/* Expanding Menu */}
       <AnimatePresence>
         {isOpen && (
@@ -31,7 +34,7 @@ export function ResumeMenu() {
               <a
                 href="/resume.pdf"
                 download="jaswanth-swaroop-krishna-kandregula.pdf"
-                className="group flex w-full items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-95"
+                className="group flex w-full min-h-[44px] items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition hover:bg-white/10 active:scale-95"
               >
                 <span className="flex items-center gap-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 transition-colors group-hover:bg-white/20">
@@ -43,7 +46,7 @@ export function ResumeMenu() {
 
               <button
                 onClick={handleCopy}
-                className="group flex w-full items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-95"
+                className="group flex w-full min-h-[44px] items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition hover:bg-white/10 active:scale-95"
               >
                 <span className="flex items-center gap-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 transition-colors group-hover:bg-white/20">
@@ -57,7 +60,7 @@ export function ResumeMenu() {
                 href="https://linkedin.com/in/jaswanthswaroop"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex w-full items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition-all hover:bg-white/10 active:scale-95"
+                className="group flex w-full min-h-[44px] items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition hover:bg-white/10 active:scale-95"
               >
                 <span className="flex items-center gap-3">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 transition-colors group-hover:bg-white/20">
@@ -76,12 +79,12 @@ export function ResumeMenu() {
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-black/90 text-white shadow-[0_0_40px_rgba(250,45,72,0.2)] backdrop-blur-xl transition-all hover:border-white/40 hover:shadow-[0_0_60px_rgba(250,45,72,0.4)]"
+        className="group relative flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-black/90 text-white shadow-[0_0_40px_rgba(250,45,72,0.2)] backdrop-blur-xl transition hover:border-white/40 hover:shadow-[0_0_60px_rgba(250,45,72,0.4)]"
       >
         {/* Glow effect */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FA2D48]/20 to-[#FF3B5C]/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {isOpen ? (
             <motion.div
               key="close"

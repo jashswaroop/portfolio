@@ -93,8 +93,7 @@
       var(--bg-0);
     color:var(--text-0);
     font-family:var(--body);
-    overflow-x:hidden;
-    min-height:100vh;
+    min-height:100dvh;
     position:relative;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
@@ -238,9 +237,10 @@
 
   /* ===== Navigation ===== */
   nav{
-    position:fixed; top:20px; left:50%; transform:translateX(-50%);
+    position:fixed; top:20px; left:0; right:0; margin:0 auto;
+    transform:translateZ(0); -webkit-transform:translateZ(0);
     z-index:100; display:flex; align-items:center; justify-content:space-between;
-    padding:6px; border-radius:50px;
+    padding:6px; border-radius:50px; overflow:hidden;
     background:rgba(255, 255, 255, 0.03);
     backdrop-filter:blur(35px) saturate(140%);
     -webkit-backdrop-filter:blur(35px) saturate(140%);
@@ -389,6 +389,10 @@
     padding:130px 8vw 50px;
     max-width:1200px; margin:0 auto;
   }
+  
+  #experience, #projects, #education, #why-hire-me {
+    overflow: hidden;
+  }
 
   .eyebrow{
     font-family:var(--mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
@@ -425,7 +429,7 @@
 
     /* ===== Hero Section (Single Composite Banner) ===== */
   .hero-banner-section {
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1276,7 +1280,7 @@
 
   .hire-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 24px;
     margin-top: 48px;
   }
@@ -1393,7 +1397,7 @@
   }
 
   /* ===== Education & Certifications ===== */
-  .edu-cert-grid{ display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+  .edu-cert-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap:28px; align-items:start; }
   .edu-card{ padding:34px; }
   .edu-card h3{
     font-family:var(--disp); font-size:19px; margin-bottom:8px;
@@ -2505,6 +2509,150 @@
     opacity: 0;
     visibility: hidden;
   }
+  
+  /* ===== Responsive & Cross-Platform Hardening Overrides ===== */
+  @media (max-width: 768px) {
+    /* Touch Targets */
+    .player-btn, .fab-trigger, .theme-toggle, nav a, .nav-cta {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    /* Layout Wrapping Fixes */
+    .timeline, .about-grid, .about-music-container {
+      flex-direction: column !important;
+      align-items: stretch !important;
+    }
+    
+    /* Fix Nav Overflow and Ensure Safe Area */
+    nav {
+      left: 16px !important;
+      right: 16px !important;
+      margin: 0 !important;
+      width: auto !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      padding: 6px 8px !important;
+      box-sizing: border-box !important;
+    }
+    
+    footer {
+      padding-bottom: calc(env(safe-area-inset-bottom, 24px) + 60px) !important;
+    }
+    
+    /* Hover-Gallery Stacking on Mobile */
+    .hover-gallery {
+      flex-direction: column !important;
+      height: auto !important;
+      gap: 24px !important;
+    }
+    .gallery-item {
+      height: auto !important;
+      min-height: 420px !important;
+      flex: none !important;
+      width: 100% !important;
+      border-radius: 24px !important;
+    }
+    .gallery-item:hover {
+      height: auto !important;
+      transform: scale(1.02);
+    }
+    .gallery-content {
+      position: relative !important;
+      bottom: auto !important;
+      padding: 32px 24px !important;
+      opacity: 1 !important;
+      transform: none !important;
+      height: 100% !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-end !important;
+    }
+    .project-stack {
+      flex-wrap: wrap !important;
+      gap: 6px !important;
+    }
+    .project-stack span {
+      margin-bottom: 8px !important;
+    }
+
+    /* Reduce giant fonts gracefully if not clamped */
+    h1 { font-size: clamp(36px, 8vw, 72px) !important; }
+    h2 { font-size: clamp(28px, 6vw, 48px) !important; }
+    h3 { font-size: clamp(20px, 4vw, 32px) !important; }
+    
+    /* Swipeable Mobile Navigation */
+    .nav-links {
+      flex: 1 1 0px !important;
+      min-width: 0 !important;
+      width: 0 !important;
+      max-width: calc(100% - 160px) !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      /* Hide scrollbar */
+      scrollbar-width: none;
+    }
+    .nav-actions {
+      flex-shrink: 0 !important;
+      gap: 4px !important;
+      margin-left: 4px !important;
+    }
+    .nav-cta {
+      padding: 8px 16px !important;
+      font-size: 13px !important;
+    }
+    .nav-links::-webkit-scrollbar {
+      display: none;
+    }
+    .nav-links a {
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+
+    /* Freeze heavy background noise on mobile */
+    .grain {
+      animation: none !important;
+      opacity: 0.02 !important;
+    }
+  }
+
+  /* Universal Safe Areas */
+  .hero-banner-section, .fab-container, .player-bar-container {
+    padding-left: max(env(safe-area-inset-left), 2vw);
+    padding-right: max(env(safe-area-inset-right), 2vw);
+  }
+
+  /* Ensure media scales fluidly */
+  img, canvas, video, svg {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Fallback for hover effects on Touch-only */
+  @media (hover: none) {
+    .job-card .job-period { background: rgba(250,45,72,0.06); border-color: rgba(250,45,72,0.30); }
+    .gallery-item-title, .gallery-item-desc { transform: translateY(0) !important; opacity: 1 !important; }
+  }
+
+  /* Performance: Hardware Acceleration */
+  .hero-banner-image, .fab-icon, .player-progress-fill, .lyrics-line {
+    will-change: transform, opacity;
+  }
+
+  /* Universal Accessibility: Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -2805,7 +2953,7 @@
       <div class="glass-spotlight" aria-hidden="true"></div>
       <span class="hire-ordinal">01</span>
       <div class="hire-card-content">
-        <h3><span class="hire-icon">🚀</span> I get things done.</h3>
+        <h3>I get things done.</h3>
         <p>No matter how hard a task is — even if I've never touched the tool before — I always deliver. And I deliver it right. Not a half-baked prototype; production-grade, tested, shipped.</p>
       </div>
     </div>
@@ -2817,7 +2965,7 @@
       <div class="glass-spotlight" aria-hidden="true"></div>
       <span class="hire-ordinal">02</span>
       <div class="hire-card-content">
-        <h3><span class="hire-icon">🔥</span> Unmatched dedication.</h3>
+        <h3>Unmatched dedication.</h3>
         <p>I'm the kind of engineer who stays up debugging until 3 AM because "close enough" isn't in the vocabulary. Every commit should make the product better, not just different.</p>
       </div>
     </div>
@@ -2829,7 +2977,7 @@
       <div class="glass-spotlight" aria-hidden="true"></div>
       <span class="hire-ordinal">03</span>
       <div class="hire-card-content">
-        <h3><span class="hire-icon">💡</span> Creative problem-solving.</h3>
+        <h3>Creative problem-solving.</h3>
         <p>When the obvious path fails, I don't stall. I rethink the approach, find the side door, and build the bridge that wasn't there before. The best solutions rarely come from the manual.</p>
       </div>
     </div>
@@ -2924,8 +3072,6 @@
   </div>
 </footer>
 
-<!-- Back to Top -->
-<a href="#top" class="back-to-top" id="backToTop" aria-label="Back to top">↑</a>
 
 <!-- GSAP 3.12.5 + ScrollTrigger + ScrollTo -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -3029,30 +3175,7 @@
     }
   }, {passive: true});
 
-  // ========== Back to Top Button ==========
-  var backToTop = document.getElementById('backToTop');
-  if(backToTop){
-    window.addEventListener('scroll', function(){
-      if(window.scrollY > 600){
-        backToTop.classList.add('visible');
-      } else {
-        backToTop.classList.remove('visible');
-      }
-    }, {passive: true});
 
-    backToTop.addEventListener('click', function(e){
-      e.preventDefault();
-      if(lenis){
-        lenis.scrollTo(0, { duration: 1.2 });
-      } else {
-        gsap.to(window, {
-          scrollTo: {y: 0, autoKill: true},
-          duration: 1.2,
-          ease: 'power3.inOut'
-        });
-      }
-    });
-  }
 
   // ========== Certificate Modal Logic ==========
   var certModal = document.getElementById('certModal');
@@ -3682,7 +3805,7 @@
   const turb = document.getElementById('liquidTurbulence');
   const disp = document.getElementById('liquidDisplacement');
   
-  if (turb && disp) {
+  if (turb && disp && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let targetScale = 15;
     let currentScale = 15;
     let targetFreq = 0.012;
