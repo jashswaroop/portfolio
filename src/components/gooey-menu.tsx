@@ -9,14 +9,14 @@ export function ResumeMenu() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('jaswanth.kandregula@gmail.com');
+    navigator.clipboard.writeText('krishswaroop31@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div 
-      className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[9999] flex flex-col items-end"
+      className="fixed bottom-6 right-6 max-[900px]:bottom-28 sm:right-8 z-[9999] flex flex-col items-end"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)', paddingRight: 'env(safe-area-inset-right)' }}
     >
       {/* Expanding Menu */}
@@ -32,7 +32,7 @@ export function ResumeMenu() {
           >
             <div className="flex flex-col gap-1 p-2">
               <a
-                href="/resume.pdf"
+                href="/portfolio/resume.pdf"
                 download="jaswanth-swaroop-krishna-kandregula.pdf"
                 className="group flex w-full min-h-[44px] items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition hover:bg-white/10 active:scale-95"
               >
@@ -57,7 +57,7 @@ export function ResumeMenu() {
               </button>
 
               <a
-                href="https://linkedin.com/in/jaswanthswaroop"
+                href="https://www.linkedin.com/in/jaswanth-swaroop-kandregula-35a707273/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex w-full min-h-[44px] items-center justify-between rounded-xl px-3 py-3 text-sm font-medium text-white transition hover:bg-white/10 active:scale-95"
