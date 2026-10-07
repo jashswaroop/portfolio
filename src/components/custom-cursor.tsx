@@ -231,7 +231,7 @@ export function CustomCursor() {
         }
       `}} />
       <div id="custom-cursor" aria-hidden="true" ref={cursorRef}>
-        <img src="/straw-hat-cursor.png" alt="" ref={imgRef} />
+        <img src="/portfolio/straw-hat-cursor.png" alt="" ref={imgRef} />
       </div>
     </>
   );
